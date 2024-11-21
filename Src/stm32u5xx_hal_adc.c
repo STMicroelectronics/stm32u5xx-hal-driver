@@ -500,6 +500,11 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc)
       hadc->MspInitCallback = HAL_ADC_MspInit; /* Legacy weak MspInit  */
     }
 
+    if (hadc->MspDeInitCallback == NULL)
+    {
+      hadc->MspDeInitCallback = HAL_ADC_MspDeInit;
+    }
+
     /* Init the low level hardware */
     hadc->MspInitCallback(hadc);
 #else
