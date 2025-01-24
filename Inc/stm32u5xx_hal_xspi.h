@@ -1314,6 +1314,10 @@ HAL_StatusTypeDef     HAL_XSPI_SetDelayValue(XSPI_HandleTypeDef *hxspi, XSPI_HSC
 
 #define IS_XSPI_TIMEOUT_PERIOD(PERIOD)            ((PERIOD) <= 0xFFFFU)
 
+#define IS_XSPI_PROG_DATA(SET_DATA, REQ_DATA)     ((SET_DATA) == (REQ_DATA))
+
+#define IS_XSPI_PROG_ADDR(SET_ADDR, REQ_ADDR)     ((SET_ADDR) == (REQ_ADDR))
+
 #if defined(OCTOSPIM)
 #define IS_XSPIM_PORT(NUMBER)                     (((NUMBER) >= 1U) && ((NUMBER) <= 8U))
 
