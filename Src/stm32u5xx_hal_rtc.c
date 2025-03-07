@@ -401,11 +401,15 @@ HAL_StatusTypeDef HAL_RTC_Init(RTC_HandleTypeDef *hrtc)
         /* Enable the write protection for RTC registers */
         __HAL_RTC_WRITEPROTECTION_ENABLE(hrtc);
       }
+      else
+      {
+        /* The calendar does not need to be initialized as the 'binary only' mode is selected */
+        status = HAL_OK;
+      }
     }
     else
     {
-      /* Calendar is already initialized */
-      /* Set flag to OK */
+      /* The calendar is already initialized */
       status = HAL_OK;
     }
 
