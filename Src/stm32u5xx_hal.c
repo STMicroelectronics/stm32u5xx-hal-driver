@@ -359,16 +359,25 @@ uint32_t HAL_GetTickPrio(void)
 HAL_StatusTypeDef HAL_SetTickFreq(HAL_TickFreqTypeDef Freq)
 {
   HAL_StatusTypeDef status  = HAL_OK;
+  HAL_TickFreqTypeDef prevTickFreq;
+
   assert_param(IS_TICKFREQ(Freq));
 
   if (uwTickFreq != Freq)
   {
+
+    /* Back up uwTickFreq frequency */
+    prevTickFreq = uwTickFreq;
+
+    /* Update uwTickFreq global variable used by HAL_InitTick() */
+    uwTickFreq = Freq;
+
     /* Apply the new tick Freq  */
     status = HAL_InitTick(uwTickPrio);
-
-    if (status == HAL_OK)
+    if (status != HAL_OK)
     {
-      uwTickFreq = Freq;
+      /* Restore previous tick frequency */
+      uwTickFreq = prevTickFreq;
     }
   }
 
