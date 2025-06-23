@@ -3481,43 +3481,43 @@ HAL_StatusTypeDef UART_WaitOnFlagUntilTimeout(UART_HandleTypeDef *huart, uint32_
 
         return HAL_TIMEOUT;
       }
+    }
 
-      if ((READ_BIT(huart->Instance->CR1, USART_CR1_RE) != 0U) && (Flag != UART_FLAG_TXE) && (Flag != UART_FLAG_TC))
+    if ((READ_BIT(huart->Instance->CR1, USART_CR1_RE) != 0U) && (Flag != UART_FLAG_TXE) && (Flag != UART_FLAG_TC))
+    {
+      if (__HAL_UART_GET_FLAG(huart, UART_FLAG_ORE) == SET)
       {
-        if (__HAL_UART_GET_FLAG(huart, UART_FLAG_ORE) == SET)
-        {
-          /* Clear Overrun Error flag*/
-          __HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_OREF);
+        /* Clear Overrun Error flag*/
+        __HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_OREF);
 
-          /* Blocking error : transfer is aborted
-          Set the UART state ready to be able to start again the process,
-          Disable Rx Interrupts if ongoing */
-          UART_EndRxTransfer(huart);
+        /* Blocking error : transfer is aborted
+        Set the UART state ready to be able to start again the process,
+        Disable Rx Interrupts if ongoing */
+        UART_EndRxTransfer(huart);
 
-          huart->ErrorCode = HAL_UART_ERROR_ORE;
+        huart->ErrorCode = HAL_UART_ERROR_ORE;
 
-          /* Process Unlocked */
-          __HAL_UNLOCK(huart);
+        /* Process Unlocked */
+        __HAL_UNLOCK(huart);
 
-          return HAL_ERROR;
-        }
-        if (__HAL_UART_GET_FLAG(huart, UART_FLAG_RTOF) == SET)
-        {
-          /* Clear Receiver Timeout flag*/
-          __HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_RTOF);
+        return HAL_ERROR;
+      }
+      if (__HAL_UART_GET_FLAG(huart, UART_FLAG_RTOF) == SET)
+      {
+        /* Clear Receiver Timeout flag*/
+        __HAL_UART_CLEAR_FLAG(huart, UART_CLEAR_RTOF);
 
-          /* Blocking error : transfer is aborted
-          Set the UART state ready to be able to start again the process,
-          Disable Rx Interrupts if ongoing */
-          UART_EndRxTransfer(huart);
+        /* Blocking error : transfer is aborted
+        Set the UART state ready to be able to start again the process,
+        Disable Rx Interrupts if ongoing */
+        UART_EndRxTransfer(huart);
 
-          huart->ErrorCode = HAL_UART_ERROR_RTO;
+        huart->ErrorCode = HAL_UART_ERROR_RTO;
 
-          /* Process Unlocked */
-          __HAL_UNLOCK(huart);
+        /* Process Unlocked */
+        __HAL_UNLOCK(huart);
 
-          return HAL_TIMEOUT;
-        }
+        return HAL_TIMEOUT;
       }
     }
   }
