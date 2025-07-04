@@ -3903,19 +3903,6 @@ static void DMA_List_BuildNode(DMA_NodeConfTypeDef const *const pNodeConfig,
         (((uint32_t)pNodeConfig->RepeatBlockConfig.BlkDestAddrOffset << DMA_CBR2_BRDAO_Pos) & DMA_CBR2_BRDAO);
     }
     /********************************************************************************* CBR2 register value is updated */
-
-
-    /* Update CLLR register value *************************************************************************************/
-    /* Reset CLLR Register value : channel linked-list address register offset */
-    pNode->LinkRegisters[NODE_CLLR_2D_DEFAULT_OFFSET] = 0U;
-    /********************************************************************************* CLLR register value is cleared */
-  }
-  else
-  {
-    /* Update CLLR register value *************************************************************************************/
-    /* Reset CLLR Register value : channel linked-list address register offset */
-    pNode->LinkRegisters[NODE_CLLR_LINEAR_DEFAULT_OFFSET] = 0U;
-    /********************************************************************************* CLLR register value is cleared */
   }
 
   /* Update node information value ************************************************************************************/
@@ -4478,7 +4465,7 @@ static void DMA_List_ConvertNodeToStatic(uint32_t ContextNodeAddr,
   uint32_t contextnode_reg_counter = 0U;
   uint32_t cllr_idx;
   uint32_t cllr_mask;
-  DMA_NodeTypeDef *context_node = (DMA_NodeTypeDef *)ContextNodeAddr;
+  const DMA_NodeTypeDef *context_node = (DMA_NodeTypeDef *)ContextNodeAddr;
   DMA_NodeTypeDef *current_node = (DMA_NodeTypeDef *)CurrentNodeAddr;
   uint32_t update_link[NODE_MAXIMUM_SIZE] = {DMA_CLLR_UT1, DMA_CLLR_UT2, DMA_CLLR_UB1, DMA_CLLR_USA,
                                              DMA_CLLR_UDA, DMA_CLLR_UT3, DMA_CLLR_UB2, DMA_CLLR_ULL

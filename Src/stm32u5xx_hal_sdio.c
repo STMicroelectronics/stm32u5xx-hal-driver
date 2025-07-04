@@ -1041,10 +1041,10 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
     while (!__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXOVERR | SDMMC_FLAG_DCRCFAIL |
                                 SDMMC_FLAG_DTIMEOUT | SDMMC_FLAG_DATAEND))
     {
-      if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXFIFOHF) && (dataremaining >= 32U))
+      if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXFIFOHF) && (dataremaining >= SDMMC_FIFO_SIZE))
       {
         /* Read data from SDMMC Rx FIFO */
-        for (regCount = 0U; regCount < 8U; regCount++)
+        for (regCount = 0U; regCount < (SDMMC_FIFO_SIZE / 4U); regCount++)
         {
           data = SDMMC_ReadFIFO(hsdio->Instance);
           *tempbuff = (uint8_t)(data & 0xFFU);
@@ -1056,9 +1056,9 @@ HAL_StatusTypeDef HAL_SDIO_ReadExtended(SDIO_HandleTypeDef *hsdio, const HAL_SDI
           *tempbuff = (uint8_t)((data >> 24U) & 0xFFU);
           tempbuff++;
         }
-        dataremaining -= 32U;
+        dataremaining -= SDMMC_FIFO_SIZE;
       }
-      else if (dataremaining < 32U)
+      else if (dataremaining < SDMMC_FIFO_SIZE)
       {
         while (!(__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_RXFIFOE)) && (dataremaining > 0U))
         {
@@ -1245,17 +1245,18 @@ HAL_StatusTypeDef HAL_SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, const HAL_SD
                                 SDMMC_FLAG_DATAEND))
     {
 
-      if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE) && (dataremaining >= 32U))
+      if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE) && (dataremaining >= SDMMC_FIFO_SIZE))
       {
         /* Read data from SDMMC Rx FIFO */
-        for (regCount = 0U; regCount < 8U; regCount++)
+        for (regCount = 0U; regCount < (SDMMC_FIFO_SIZE / 4U); regCount++)
         {
           hsdio->Instance->FIFO = *u32tempbuff;
           u32tempbuff++;
         }
-        dataremaining -= 32U;
+        dataremaining -= SDMMC_FIFO_SIZE;
       }
-      else if ((__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE | SDMMC_FLAG_TXFIFOE)) && (dataremaining < 32U))
+      else if ((__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE | SDMMC_FLAG_TXFIFOE)) &&
+               (dataremaining < SDMMC_FIFO_SIZE))
       {
         const uint8_t *u8buff = (uint8_t *)u32tempbuff;
         while (dataremaining > 0U)
@@ -2727,16 +2728,18 @@ static HAL_StatusTypeDef SDIO_WriteExtended(SDIO_HandleTypeDef *hsdio, HAL_SDIO_
   while (!__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXUNDERR | SDMMC_FLAG_DCRCFAIL | SDMMC_FLAG_DTIMEOUT |
                               SDMMC_FLAG_DATAEND))
   {
-    if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE) && (dataremaining >= 32U))
+    if (__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE) &&
+        (dataremaining >= SDMMC_FIFO_SIZE))
     {
-      for (regCount = 8U; regCount > 0U; regCount--)
+      for (regCount = SDMMC_FIFO_SIZE / 4U; regCount > 0U; regCount--)
       {
         SDMMCx->FIFO = *u32tempbuff;
         u32tempbuff++;
       }
-      dataremaining -= 32U;
+      dataremaining -= SDMMC_FIFO_SIZE;
     }
-    else if ((__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE | SDMMC_FLAG_TXFIFOE)) && (dataremaining < 32U))
+    else if ((__HAL_SDIO_GET_FLAG(hsdio, SDMMC_FLAG_TXFIFOHE | SDMMC_FLAG_TXFIFOE)) &&
+             (dataremaining < SDMMC_FIFO_SIZE))
     {
       const uint8_t *u8buff = (uint8_t *)u32tempbuff;
       while (dataremaining > 0U)
