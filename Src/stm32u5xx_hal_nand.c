@@ -523,7 +523,6 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_Ad
   uint32_t index;
   uint32_t tickstart;
   uint32_t deviceaddress;
-  uint32_t numpagesread = 0U;
   uint32_t nandaddress;
   uint32_t nbpages = NumPageToRead;
   uint8_t *buff = pBuffer;
@@ -642,9 +641,6 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_8b(NAND_HandleTypeDef *hnand, const NAND_Ad
         buff++;
       }
 
-      /* Increment read pages number */
-      numpagesread++;
-
       /* Decrement pages to read */
       nbpages--;
 
@@ -681,7 +677,6 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_A
   uint32_t index;
   uint32_t tickstart;
   uint32_t deviceaddress;
-  uint32_t numpagesread = 0U;
   uint32_t nandaddress;
   uint32_t nbpages = NumPageToRead;
   uint16_t *buff = pBuffer;
@@ -810,9 +805,6 @@ HAL_StatusTypeDef HAL_NAND_Read_Page_16b(NAND_HandleTypeDef *hnand, const NAND_A
         buff++;
       }
 
-      /* Increment read pages number */
-      numpagesread++;
-
       /* Decrement pages to read */
       nbpages--;
 
@@ -849,7 +841,6 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_A
   uint32_t index;
   uint32_t tickstart;
   uint32_t deviceaddress;
-  uint32_t numpageswritten = 0U;
   uint32_t nandaddress;
   uint32_t nbpages = NumPageToWrite;
   const uint8_t *buff = pBuffer;
@@ -963,9 +954,6 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_8b(NAND_HandleTypeDef *hnand, const NAND_A
         }
       }
 
-      /* Increment written pages number */
-      numpageswritten++;
-
       /* Decrement pages to write */
       nbpages--;
 
@@ -1002,7 +990,6 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_
   uint32_t index;
   uint32_t tickstart;
   uint32_t deviceaddress;
-  uint32_t numpageswritten = 0U;
   uint32_t nandaddress;
   uint32_t nbpages = NumPageToWrite;
   const uint16_t *buff = pBuffer;
@@ -1127,9 +1114,6 @@ HAL_StatusTypeDef HAL_NAND_Write_Page_16b(NAND_HandleTypeDef *hnand, const NAND_
         }
       }
 
-      /* Increment written pages number */
-      numpageswritten++;
-
       /* Decrement pages to write */
       nbpages--;
 
@@ -1166,7 +1150,6 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NA
   uint32_t index;
   uint32_t tickstart;
   uint32_t deviceaddress;
-  uint32_t numsparearearead = 0U;
   uint32_t nandaddress;
   uint32_t columnaddress;
   uint32_t nbspare = NumSpareAreaToRead;
@@ -1292,9 +1275,6 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_8b(NAND_HandleTypeDef *hnand, const NA
         buff++;
       }
 
-      /* Increment read spare areas number */
-      numsparearearead++;
-
       /* Decrement spare areas to read */
       nbspare--;
 
@@ -1331,7 +1311,6 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const N
   uint32_t index;
   uint32_t tickstart;
   uint32_t deviceaddress;
-  uint32_t numsparearearead = 0U;
   uint32_t nandaddress;
   uint32_t columnaddress;
   uint32_t nbspare = NumSpareAreaToRead;
@@ -1457,9 +1436,6 @@ HAL_StatusTypeDef HAL_NAND_Read_SpareArea_16b(NAND_HandleTypeDef *hnand, const N
         buff++;
       }
 
-      /* Increment read spare areas number */
-      numsparearearead++;
-
       /* Decrement spare areas to read */
       nbspare--;
 
@@ -1496,7 +1472,6 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const N
   uint32_t index;
   uint32_t tickstart;
   uint32_t deviceaddress;
-  uint32_t numspareareawritten = 0U;
   uint32_t nandaddress;
   uint32_t columnaddress;
   uint32_t nbspare = NumSpareAreaTowrite;
@@ -1620,9 +1595,6 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_8b(NAND_HandleTypeDef *hnand, const N
         }
       }
 
-      /* Increment written spare areas number */
-      numspareareawritten++;
-
       /* Decrement spare areas to write */
       nbspare--;
 
@@ -1659,7 +1631,6 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, const 
   uint32_t index;
   uint32_t tickstart;
   uint32_t deviceaddress;
-  uint32_t numspareareawritten = 0U;
   uint32_t nandaddress;
   uint32_t columnaddress;
   uint32_t nbspare = NumSpareAreaTowrite;
@@ -1782,9 +1753,6 @@ HAL_StatusTypeDef HAL_NAND_Write_SpareArea_16b(NAND_HandleTypeDef *hnand, const 
           return HAL_TIMEOUT;
         }
       }
-
-      /* Increment written spare areas number */
-      numspareareawritten++;
 
       /* Decrement spare areas to write */
       nbspare--;
