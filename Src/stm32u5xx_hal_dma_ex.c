@@ -2930,7 +2930,7 @@ HAL_StatusTypeDef HAL_DMAEx_List_ConvertQToDynamic(DMA_QListTypeDef *const pQLis
   uint32_t cllr_offset;
   uint32_t currentnode_addr;
   DMA_NodeTypeDef context_node;
-  DMA_NodeInQInfoTypeDef node_info;
+  DMA_NodeInQInfoTypeDef node_info = {0U};
 
   /* Check the queue parameter */
   if (pQList == NULL)
