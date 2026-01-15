@@ -2736,8 +2736,8 @@ HAL_StatusTypeDef HAL_OSPIM_Config(OSPI_HandleTypeDef *hospi, OSPIM_CfgTypeDef *
     /********************* Deactivation of other instance *********************/
     if ((cfg->ClkPort == IOM_cfg[other_instance].ClkPort) || (cfg->NCSPort == IOM_cfg[other_instance].NCSPort) ||
         ((cfg->DQSPort == IOM_cfg[other_instance].DQSPort) && (cfg->DQSPort != 0U)) ||
-        (cfg->IOLowPort == IOM_cfg[other_instance].IOLowPort) ||
-        (cfg->IOHighPort == IOM_cfg[other_instance].IOHighPort))
+        ((cfg->IOLowPort == IOM_cfg[other_instance].IOLowPort) && (cfg->IOLowPort != HAL_OSPIM_IOPORT_NONE)) ||
+        ((cfg->IOHighPort == IOM_cfg[other_instance].IOHighPort) && (cfg->IOHighPort != HAL_OSPIM_IOPORT_NONE)))
     {
       if ((cfg->ClkPort   == IOM_cfg[other_instance].ClkPort)   &&
           (cfg->DQSPort    == IOM_cfg[other_instance].DQSPort)  &&
