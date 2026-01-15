@@ -1986,7 +1986,7 @@ HAL_StatusTypeDef HAL_OSPI_MemoryMapped(OSPI_HandleTypeDef *hospi, OSPI_MemoryMa
   * @param  hospi   : OSPI handle
   * @retval Status (0: Memory-mapped disabled or OCTOSPI not initialized, 1: Memory-mapped enabled)
   */
-uint32_t HAL_OSPI_IsMemoryMapped(OSPI_HandleTypeDef *hospi)
+uint32_t HAL_OSPI_IsMemoryMapped(const OSPI_HandleTypeDef *hospi)
 {
   /* Check the OSPI handle allocation */
   if (hospi == NULL)
