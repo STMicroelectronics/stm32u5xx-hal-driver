@@ -104,11 +104,17 @@ extern "C" {
   * @{
   */
 #define LL_PWR_STOP0_MODE    (0U)                              /*!< Stop 0 mode   */
+#define LL_PWR_MODE_STOP0    LL_PWR_STOP0_MODE                 /*!< Stop 0 mode   */
 #define LL_PWR_STOP1_MODE    PWR_CR1_LPMS_0                    /*!< Stop 1 mode   */
+#define LL_PWR_MODE_STOP1    LL_PWR_STOP1_MODE                 /*!< Stop 1 mode   */
 #define LL_PWR_STOP2_MODE    PWR_CR1_LPMS_1                    /*!< Stop 2 mode   */
+#define LL_PWR_MODE_STOP2    LL_PWR_STOP2_MODE                 /*!< Stop 2 mode   */
 #define LL_PWR_STOP3_MODE    (PWR_CR1_LPMS_0 | PWR_CR1_LPMS_1) /*!< Stop 3 mode   */
+#define LL_PWR_MODE_STOP3    LL_PWR_STOP3_MODE                 /*!< Stop 3 mode   */
 #define LL_PWR_STANDBY_MODE  PWR_CR1_LPMS_2                    /*!< Standby mode  */
+#define LL_PWR_MODE_STANDBY  LL_PWR_STANDBY_MODE               /*!< Standby mode  */
 #define LL_PWR_SHUTDOWN_MODE (PWR_CR1_LPMS_2 | PWR_CR1_LPMS_1) /*!< Shutdown mode */
+#define LL_PWR_MODE_SHUTDOWN LL_PWR_SHUTDOWN_MODE              /*!< Shutdown mode */
 /**
   * @}
   */
