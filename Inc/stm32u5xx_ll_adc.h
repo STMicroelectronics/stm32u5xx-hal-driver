@@ -6617,7 +6617,10 @@ __STATIC_INLINE uint32_t LL_ADC_GetChannelSingleDiff(const ADC_TypeDef *ADCx, ui
   *             channel wise, from from 1 to all channels.
   *             Specificity of this analog watchdog: Multiple channels can
   *             be selected. For example:
-  *             (LL_ADC_AWD_CHANNEL4_REG_INJ | LL_ADC_AWD_CHANNEL5_REG_INJ | ...)
+  *             (LL_ADC_AWD_CHANNEL4_REG_INJ, LL_ADC_AWD_CHANNEL5_REG_INJ and ...)
+  *           - The AWDChannelGroup parameter can be configured with one value from 
+  *             the ADC_LL_EC_AWD_CHANNELS group in each LL_ADC_SetAnalogWDMonitChannels() call: 
+  *             bitwise combinations are not possible to set AWDChannelGroup.
   *           - groups monitored: not selection possible (monitoring on both
   *             groups regular and injected).
   *             Channels selected are monitored on groups regular and injected:
