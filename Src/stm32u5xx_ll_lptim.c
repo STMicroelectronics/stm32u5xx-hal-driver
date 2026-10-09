@@ -257,6 +257,21 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
       LL_LPTIM_ClearFlag_CMP2OK(LPTIMx);
     }
 
+    if (tmpDIER != 0UL)
+    {
+      LPTIMx->CR |= LPTIM_CR_ENABLE;
+      LPTIMx->DIER = tmpDIER;
+
+      LL_RCC_GetSystemClocksFreq(&rcc_clock);
+      /* Polling on DIER write ok status after above restore operation */
+      do
+      {
+        rcc_clock.SYSCLK_Frequency--; /* Used for timeout */
+      } while (((LL_LPTIM_IsActiveFlag_DIEROK(LPTIMx) != 1UL)) && ((rcc_clock.SYSCLK_Frequency) > 0UL));
+
+      LL_LPTIM_ClearFlag_DIEROK(LPTIMx);
+    }
+
     if (tmpARR != 0UL)
     {
       LPTIMx->CR |= LPTIM_CR_ENABLE;
@@ -290,7 +305,6 @@ void LL_LPTIM_Disable(LPTIM_TypeDef *LPTIMx)
 
   /* Restore configuration registers (LPTIM should be disabled first) */
   LPTIMx->CR &= ~(LPTIM_CR_ENABLE);
-  LPTIMx->DIER = tmpDIER;
   LPTIMx->CFGR = tmpCFGR;
   LPTIMx->CFGR2 = tmpCFGR2;
   LPTIMx->CCMR1 = tmpCCMR1;

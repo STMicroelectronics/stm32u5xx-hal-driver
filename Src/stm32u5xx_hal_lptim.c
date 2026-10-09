@@ -3701,6 +3701,21 @@ void LPTIM_Disable(LPTIM_HandleTypeDef *hlptim)
       __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_CMP2OK);
     }
 
+    if (tmpDIER != 0UL)
+    {
+      /* Restore DIER register (LPTIM should be enabled first) */
+      hlptim->Instance->CR |= LPTIM_CR_ENABLE;
+      hlptim->Instance->DIER = tmpDIER;
+
+      /* Wait for the completion of the write operation to the LPTIM_DIER register */
+      if (LPTIM_WaitForFlag(hlptim, LPTIM_FLAG_DIEROK) == HAL_TIMEOUT)
+      {
+        hlptim->State = HAL_LPTIM_STATE_TIMEOUT;
+      }
+
+      __HAL_LPTIM_CLEAR_FLAG(hlptim, LPTIM_FLAG_DIEROK);
+    }
+
     if (tmpARR != 0UL)
     {
       /* Restore ARR register (LPTIM should be enabled first) */
@@ -3733,7 +3748,6 @@ void LPTIM_Disable(LPTIM_HandleTypeDef *hlptim)
 
   /* Restore configuration registers (LPTIM should be disabled first) */
   hlptim->Instance->CR &= ~(LPTIM_CR_ENABLE);
-  hlptim->Instance->DIER = tmpDIER;
   hlptim->Instance->CFGR = tmpCFGR;
   hlptim->Instance->CFGR2 = tmpCFGR2;
   hlptim->Instance->CCMR1 = tmpCCMR1;
